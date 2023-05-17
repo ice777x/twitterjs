@@ -1,0 +1,17 @@
+{
+  "name": "twitterjs",
+  "version": 2,
+  "public": true,
+  "builds": [
+    {
+      "src": "./main.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/main.ts"
+    }
+  ]
+}
