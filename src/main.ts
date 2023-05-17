@@ -30,7 +30,7 @@ function getTweetApiUrl(id: string, type: string, cursor?: string) {
 }
 
 app.get("/", async (req: Request, res: Response) => {
-  return {
+  res.status(200).json({
     message: "Welcome to the Twitter API",
     paths: [
       {
@@ -57,7 +57,7 @@ app.get("/", async (req: Request, res: Response) => {
         ],
       },
     ],
-  };
+  });
 });
 
 async function getGuestToken() {
