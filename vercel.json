@@ -4,14 +4,14 @@
   "public": true,
   "builds": [
     {
-      "src": "./main.ts",
+      "src": "src/main.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/main.ts"
+      "dest": "/src/main.ts"
     }
   ]
 }
