@@ -143,7 +143,7 @@ app.get("/twitter", async (req: Request, res: Response) => {
                 following_count: tw_user.legacy.friends_count,
                 media_count: tw_user.legacy.media_count,
                 favourites_count: tw_user.legacy.favourites_count,
-
+                blue_verified: tw_user.is_blue_verified,
                 verified: tw_user.legacy.verified,
               },
               entities:
@@ -229,7 +229,7 @@ app.get("/twitter", async (req: Request, res: Response) => {
                 following_count: tw_user.legacy.friends_count,
                 media_count: tw_user.legacy.media_count,
                 favourites_count: tw_user.legacy.favourites_count,
-
+                blue_verified: tw_user.is_blue_verified,
                 verified: tw_user.legacy.verified,
               },
               entities:
