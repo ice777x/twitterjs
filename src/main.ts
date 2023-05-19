@@ -1,7 +1,9 @@
 import express, { Express, Request, Response } from "express";
 import { config } from "dotenv";
 import { exit } from "process";
+import favicon from "serve-favicon";
 import { getGuestToken, search, tweet, tweetThread, user } from "./funcs";
+import path from "path";
 config();
 
 const BEARER_TOKEN = process.env.TWITTER_BEARER_TOKEN as string;
@@ -10,6 +12,7 @@ if (!BEARER_TOKEN) {
 }
 
 const app: Express = express();
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 function getTweetApiUrl(id: string, type: string, cursor?: string) {
   if (type === "tweet") {
@@ -44,22 +47,36 @@ app.get("/", async (req: Request, res: Response) => {
             description: "The user's id or tweet id",
             args: [
               "/twitter?id=elonmusk&type=user",
-              "/twitter?id=1234567890&type=tweet",
+              {
+                name: "user",
+                description: "Get a User",
+                exp: "/twitter?id=purplebixi&type=user",
+              },
+              {
+                name: "tweetDetail",
+                description: "Get a Tweet Detail",
+                exp: "/twitter?id=1234567890&type=tweetDetail",
+              },
+              {
+                name: "tweet",
+                description: "Get a Tweet",
+                exp: "/twitter?id=1234567890&type=tweet",
+              },
+              {
+                name: "search",
+                description: "Search for a user",
+                exp: "/twitter?id=elonmu&type=search",
+              },
             ],
           },
           {
             name: "type",
             description: "The type of tweets to get",
-            args: ["user", "tweet", "tweetDetail"],
+            args: ["user", "tweet", "tweetDetail", "search"],
           },
           {
             name: "cursor",
             description: "The cursor to use",
-          },
-          {
-            name: "search",
-            description: "Search for a user",
-            args: ["/twitter?id=elonmu&type=search"],
           },
         ],
       },
@@ -126,7 +143,7 @@ app.get("/twitter", async (req: Request, res: Response) => {
         data: data && data,
       };
     } else if (type === "user") {
-      if (String(resp.data) == new Object()) {
+      if (String(resp.data) === new Object()) {
         response_data = {
           id,
           type,
