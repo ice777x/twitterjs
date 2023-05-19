@@ -95,32 +95,23 @@ export function tweetThread(item: any) {
   };
 }
 
-// export function userTweets(item: any) {
-//   const tw_result = item.content.itemContent.tweet_results.result;
-//   const tw_user =
-//     item.content.itemContent.tweet_results.result.core.user_results.result;
-//   const rtw_result = tw_result.legacy.retweeted_status_result;
-//   return {
-//     type: item.content.itemContent.itemType,
-//     id: tw_result.legacy.id_str,
-//     url: `https://twitter.com/${tw_user.legacy.screen_name}/status/${tw_result.legacy.id_str}`,
-//     entryId: item.entryId,
-//     text: tw_result.legacy.full_text,
-//     user: user(tw_user),
-//     entities:
-//       tw_result.legacy.extended_entities &&
-//       entities(tw_result.legacy.extended_entities.media),
-//     retweeted_status_result: rtw_result && rtweet_result(rtw_result),
-//     views: tw_result.views.count,
-//     lang: tw_result.legacy.lang,
-//     reply_count: tw_result.legacy.reply_count,
-//     retweet_count: tw_result.legacy.retweet_count,
-//     favorite_count: tw_result.legacy.favorite_count,
-//     quote_count: tw_result.legacy.quote_count,
-//     created_at: tw_result.legacy.created_at,
-//     detail: `/twitter?id=${tw_result.legacy.id_str}&type=tweetDetail`,
-//   };
-// }
+export function search(item: any) {
+  return {
+    id: item.id,
+    id_str: item.id_str,
+    name: item.name,
+    username: item.screen_name,
+    detail: `/twitter?id=${item.id_str}&type=user`,
+    tweets: `/twitter?id=${item.id_str}&type=tweet`,
+    image: {
+      profile: item.profile_image_url_https,
+    },
+    location: item.location,
+
+    blue_verified: item.ext_is_blue_verified,
+    verified: item.verified,
+  };
+}
 
 function entities(item: any) {
   return item
