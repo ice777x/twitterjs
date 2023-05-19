@@ -56,6 +56,11 @@ app.get("/", async (req: Request, res: Response) => {
             name: "cursor",
             description: "The cursor to use",
           },
+          {
+            name: "search",
+            description: "Search for a user",
+            args: ["/twitter?id=elonmu&type=search"],
+          },
         ],
       },
     ],
