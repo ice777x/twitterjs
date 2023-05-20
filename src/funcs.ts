@@ -63,36 +63,41 @@ export function tweet(item: any) {
 }
 
 export function tweetThread(item: any) {
-  const tw_result = item.content.items[0].item.itemContent.tweet_results.result;
-  const tw_user =
-    item.content.items[0].item.itemContent.tweet_results.result.core
-      .user_results.result;
-  const rtw_result = tw_result.legacy.retweeted_status_result;
-  return {
-    id: tw_result.legacy.id_str,
-    entryId: item.entryId,
-    display: item.content.items[0].item.itemContent.tweetDisplayType,
-    url: `https://twitter.com/${tw_user.legacy.screen_name}/status/${tw_result.legacy.id_str}`,
-    text: tw_result.legacy.full_text,
-    note_text:
-      tw_result.note_tweet &&
-      tw_result.note_tweet.note_tweet_results.result.text,
-    quoted_tweet:
-      tw_result.quoted_status_result &&
-      baseTweet(tw_result.quoted_status_result.result),
-    user: user(tw_user),
-    entities:
-      tw_result.legacy.extended_entities &&
-      entities(tw_result.legacy.extended_entities.media),
-    retweeted_status_result: rtw_result && rtweet_result(rtw_result),
-    views: tw_result.views.count,
-    lang: tw_result.legacy.lang,
-    reply_count: tw_result.legacy.reply_count,
-    retweet_count: tw_result.legacy.retweet_count,
-    favorite_count: tw_result.legacy.favorite_count,
-    quote_count: tw_result.legacy.quote_count,
-    created_at: tw_result.legacy.created_at,
-  };
+  return item.content.items
+    .map((item: any) => {
+      if (item.entryId.startsWith("conversationthread")) {
+        const tw_result = item.item.itemContent.tweet_results.result;
+        const tw_user =
+          item.item.itemContent.tweet_results.result.core.user_results.result;
+        const rtw_result = tw_result.legacy.retweeted_status_result;
+        return {
+          id: tw_result.legacy.id_str,
+          entryId: item.entryId,
+          display: item.item.itemContent.tweetDisplayType,
+          url: `https://twitter.com/${tw_user.legacy.screen_name}/status/${tw_result.legacy.id_str}`,
+          text: tw_result.legacy.full_text,
+          note_text:
+            tw_result.note_tweet &&
+            tw_result.note_tweet.note_tweet_results.result.text,
+          quoted_tweet:
+            tw_result.quoted_status_result &&
+            baseTweet(tw_result.quoted_status_result.result),
+          user: user(tw_user),
+          entities:
+            tw_result.legacy.extended_entities &&
+            entities(tw_result.legacy.extended_entities.media),
+          retweeted_status_result: rtw_result && rtweet_result(rtw_result),
+          views: tw_result.views.count,
+          lang: tw_result.legacy.lang,
+          reply_count: tw_result.legacy.reply_count,
+          retweet_count: tw_result.legacy.retweet_count,
+          favorite_count: tw_result.legacy.favorite_count,
+          quote_count: tw_result.legacy.quote_count,
+          created_at: tw_result.legacy.created_at,
+        };
+      }
+    })
+    .filter((item: any) => item);
 }
 
 export function search(item: any) {
