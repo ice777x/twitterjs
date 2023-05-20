@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import { exit } from "process";
 import favicon from "serve-favicon";
 import { getGuestToken, search, tweet, tweetThread, user } from "./funcs";
+import cors from "cors";
 import path from "path";
 config();
 
@@ -13,6 +14,7 @@ if (!BEARER_TOKEN) {
 
 const app: Express = express();
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+app.options("*", cors());
 
 function getTweetApiUrl(id: string, type: string, cursor?: string) {
   if (type === "tweet") {
