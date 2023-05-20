@@ -65,7 +65,10 @@ export function tweet(item: any) {
 export function tweetThread(item: any) {
   return item.content.items
     .map((item: any) => {
-      if (item.entryId.startsWith("conversationthread")) {
+      if (
+        !item.entryId.includes("cursor") &&
+        item.item.itemContent.itemType === "TimelineTweet"
+      ) {
         const tw_result = item.item.itemContent.tweet_results.result;
         const tw_user =
           item.item.itemContent.tweet_results.result.core.user_results.result;
