@@ -14,7 +14,11 @@ if (!BEARER_TOKEN) {
 
 const app: Express = express();
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
-app.options("*", cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 function getTweetApiUrl(id: string, type: string, cursor?: string) {
   if (type === "tweet") {
