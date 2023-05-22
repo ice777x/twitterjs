@@ -11,7 +11,8 @@ export function baseTweet(tw: any): any {
     text: tw.legacy.full_text,
     note_text: tw.note_tweet && tw.note_tweet.note_tweet_results.result.text,
     user: user(tw.core.user_results.result),
-    entities:
+    entities: tw.legacy.entities && tw.legacy.entities,
+    extended_entities:
       tw.legacy.extended_entities &&
       entities(tw.legacy.extended_entities.media),
     retweeted_status_result:
@@ -44,11 +45,13 @@ export function tweet(item: any) {
     note_text:
       tw_result.note_tweet &&
       tw_result.note_tweet.note_tweet_results.result.text,
+    card: tw_result.card && tw_result.card,
     quoted_tweet:
       tw_result.quoted_status_result &&
       baseTweet(tw_result.quoted_status_result.result),
     user: user(tw_user),
-    entities:
+    entities: tw_result.legacy.entities && tw_result.legacy.entities,
+    extended_entities:
       tw_result.legacy.extended_entities &&
       entities(tw_result.legacy.extended_entities.media),
     retweeted_status_result: rtw_result && rtweet_result(rtw_result),
@@ -82,11 +85,13 @@ export function tweetThread(item: any) {
           note_text:
             tw_result.note_tweet &&
             tw_result.note_tweet.note_tweet_results.result.text,
+          card: tw_result.card && tw_result.card,
           quoted_tweet:
             tw_result.quoted_status_result &&
             baseTweet(tw_result.quoted_status_result.result),
           user: user(tw_user),
-          entities:
+          entities: tw_result.legacy.entities && tw_result.legacy.entities,
+          extended_entities:
             tw_result.legacy.extended_entities &&
             entities(tw_result.legacy.extended_entities.media),
           retweeted_status_result: rtw_result && rtweet_result(rtw_result),
