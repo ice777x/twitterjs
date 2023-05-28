@@ -178,6 +178,35 @@ function entities(item: any) {
             user_id: item.source_user_id_str && item.source_user_id_str,
           },
         };
+      } else if (item.type === "animated_gif") {
+        return {
+          id: item.id_str,
+          type: item.type,
+          url: item.url,
+          expanded_url: item.expanded_url,
+          media_key: item.media_key,
+          media_url: item.media_url_https,
+          info: {
+            width: item.original_info.width,
+            height: item.original_info.height,
+          },
+          video: {
+            aspect_ration: item.video_info.aspect_ratio,
+            variants: item.video_info.variants
+              .map((item: any) => {
+                return {
+                  url: item.url,
+                  content_type: item.content_type,
+                  bitrate: item.bitrate,
+                };
+              })
+              .filter((item: any) => item),
+          },
+          source: item.source_status_id_str && {
+            id: item.source_status_id_str && item.source_status_id_str,
+            user_id: item.source_user_id_str && item.source_user_id_str,
+          },
+        };
       }
     })
     .filter((item: any) => item);
