@@ -31,15 +31,11 @@ export function baseTweet(tw: any): any {
   };
 }
 
-export function tweet(item: any) {
-  const tw_result = item.content.itemContent.tweet_results.result;
-  const tw_user =
-    item.content.itemContent.tweet_results.result.core.user_results.result;
+export function tweet(tw_result: any) {
+  const tw_user = tw_result.core.user_results.result;
   const rtw_result = tw_result.legacy.retweeted_status_result;
   return {
     id: tw_result.legacy.id_str,
-    entryId: item.entryId,
-    display: item.content.itemContent.tweetDisplayType,
     url: `https://twitter.com/${tw_user.legacy.screen_name}/status/${tw_result.legacy.id_str}`,
     text: tw_result.legacy.full_text,
     note_text:
