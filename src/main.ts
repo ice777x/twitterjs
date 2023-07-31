@@ -7,7 +7,7 @@ import cors from "cors";
 import path from "path";
 config();
 
-const BEARER_TOKEN = process.env.BEARER_TOKEN as string;
+const BEARER_TOKEN = process.env.TWITTER_BEARER_TOKEN as string;
 if (!BEARER_TOKEN) {
   exit(1);
 }
