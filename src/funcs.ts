@@ -262,6 +262,7 @@ export async function getGuestToken(bearer_token: string) {
       }
     );
     const data = await response.json();
+    console.log(data);
     return data.guest_token;
   } catch (e: any) {
     return null;
