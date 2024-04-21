@@ -202,4 +202,5 @@ app.get("/twitter/user/:id", async (req: Request, res: Response) => {
     res.status(500).json({error: e.message || "Internal Server Error"});
   }
 });
+
 app.listen(5000, () => console.log(`Server running on port ${5000}`));
